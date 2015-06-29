@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context ="http://www.springframework.org/schema/context" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
+	
+	<context:annotation-config></context:annotation-config>
+	
+	<context:component-scan base-package="*"/>
+	
+	<!-- 
+		connect type 1
+		use spring own dataSource
+		need mysql-connection
+	 -->
+<!-- 	<bean name="remotePosDataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/myTest?useUnicode=true&amp;characterEncoding=UTF-8
+            </value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value></value>
+        </property>
+    </bean>    -->
+    
+    <!-- 
+    	connect type 2
+    	use c3p0
+    	need mysql-connection c3p0/mchange jar
+    -->
+<!-- 	<bean name="remotePosDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">  
+		<property name="driverClass"  value="com.mysql.jdbc.Driver" />    
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/myTest?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="user" value="root" />
+		<property name="password" value="" />
+	</bean> -->
+	
+	<!-- 
+		connect type 3
+		apache dbcp
+		need mysql-connection commons-dbcp/commons-pool jar
+	-->
+	<bean name="remotePosDataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+		<property name="driverClassName"  value="com.mysql.jdbc.Driver" />    
+		<property name="url" value="jdbc:mysql://localhost:3306/myTest?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="root" />  
+		<property name="password" value="" />  
+	</bean>
+	
+    
+	
+</beans>
