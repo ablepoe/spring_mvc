@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+ASDF
+<form id="index" action="test.do" method="POST">
+<input id="mytest" name="mytest" type="text" value="5"/>
+<input type="submit" value="submit"/>
+<input type="button" value="ajax" onclick="myajax()">
+</form>
+</body>
+<script type="text/javascript">
+
+function myajax(){
+	var mytest = $("#mytest").val();
+	 $.ajax({     
+		    /* url:"myTestServlet",      */
+		    url:"test.do",
+		    type:"post",     
+		    data:{"mytest":mytest,"mytest2":"asdf"}, 
+		    dataType:"json",
+		  /*   data:"mytest=qwerty", 
+		    dataType:"text", */
+		    error:function(){
+		        alert('error');     
+		    },     
+		    success:function(data){     
+		    	alert(data);     
+				alert(data.name+":"+data.password);		    	
+		    }  
+		}); 
+}
+ 
+</script>
+</html>
