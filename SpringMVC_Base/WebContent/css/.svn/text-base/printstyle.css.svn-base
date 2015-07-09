@@ -1,0 +1,13 @@
+@media print {
+	div.NoPrint { display : none }
+    div.PageBreak { page-break-after:always }
+    
+    h1 
+    {
+        color:  red;
+    }
+    h2 
+    {
+        color: gray;
+    }
+}

@@ -1,0 +1,58 @@
+*{
+	font-size:12px;
+}
+body {
+    font-family:Microsoft Yahei,simsun,verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+.demo-info{
+	padding:0 0 12px 0;
+}
+.demo-tip{
+	display:none;
+}
+.span_must{
+	font-weight:bold;
+}
+/* easyui覆盖 */
+.datagrid-header-row td {background-color:#E8F1FF;color:#000000;}
+.numberbox .textbox-text {text-align: right;}
+/* combobox只读时样式 */
+.textbox-text-readonly {color: #888888;}
+.textbox-icon-disabled {background-color:#C0C0C0;}
+.combo .textbox-icon-disabled:hover {background-color: #C0C0C0;}
+/*.combo-arrow:hover {background-color: #C0C0C0;}*/
+
+
+/* html css */
+.print_table
+{
+    border-collapse:collapse;
+    border:solid #00000 1px;
+}
+
+.print_table th
+{
+    border:solid #000 1px;
+    border-color:"#00000";
+}
+
+.print_table td
+{
+    border:solid #000 1px;
+    border-color:"#00000";
+    padding-left:4px;
+    vertical-align:top;
+}
+.span_item{
+	background: #C8CDD4;
+	font-weight:500;
+}  
