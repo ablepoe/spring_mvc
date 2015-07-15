@@ -9,3 +9,11 @@ spring_mvc learning example<br/>
     Kaptcha code
     menu display
 And a `base project` using most of upon
+
+-------------------------------------------
+# spring
+spring learning example<br/>
+
+### contains spring projects:
+    Spring_aop
+    Spring_security
