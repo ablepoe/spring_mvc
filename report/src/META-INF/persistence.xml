@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+            http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+            
+    <persistence-unit name="userFunction" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>  
+        <properties>
+            <!--Hibernate dialect -->
+            <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" /> -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+            <!--dirver -->
+            <!-- <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> -->
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+            <!--username -->
+            <!-- <property name="hibernate.connection.username" value="root" /> -->
+            <property name="hibernate.connection.username" value="dhcdb01" />
+            <!--passwoird -->
+            <!-- <property name="hibernate.connection.password" value="" /> -->
+            <property name="hibernate.connection.password" value="1234" />
+            <!--url -->
+            <!-- <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/report_form?useUnicode=true&amp;characterEncoding=UTF-8" /> -->
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@192.168.10.151:1521:dhcdbbk" />
+            <!--max_fetch_depth-->
+            <property name="hibernate.max_fetch_depth" value="3" />
+            <!--auto display sql -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />    
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="javax.persistence.validation.mode" value="none"/>
+            <property name="hibernate.connection.release_mode" value="auto"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context ="http://www.springframework.org/schema/context" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/data/repository
+ 		http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd
+        " >
+	
+	<!-- enable annotation -->
+	<context:annotation-config/>
+	
+	<!-- sacn package -->
+	<context:component-scan base-package="com.*"/>
+	
+    <!-- enable @Transaction -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManagerCrm"/>
+	
+	<!-- environment param -->
+    <context:property-placeholder location="classpath:c3p0.properties"/>
+    
+    <!-- jpa repository enable -->
+    <jpa:repositories base-package="com.dhc.repository"/>
+    
+    <!-- aop enable -->
+    <aop:aspectj-autoproxy/>
+	
+	<!-- hibernate db link start -->
+	<!-- data source -->  
+	<!-- <bean id="dataSourceH" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+        <property name="driverClass" value="${login.driver}"/>
+        <property name="jdbcUrl" value="${login.url}"/>
+        <property name="user" value="${login.username}"/>
+        <property name="password" value="${login.password}"/>
+        <property name="autoCommitOnClose" value="true"/>
+        <property name="checkoutTimeout" value="${cpool.checkoutTimeout}"/>
+        <property name="initialPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="minPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="maxPoolSize" value="${cpool.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
+     	<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
+     </bean>
+    
+    <bean id="npJdbcDb"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSourceH" />
+	</bean>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
+    	<property name="persistenceUnitName" value="userFunction"/>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+		<property name="entityManagerFactory" ref="entityManagerFactory" />  
+    </bean>  -->
+	<!-- hibernate db link end -->
+	
+	<!-- datadb start -->
+	<bean id="dataSourceCrm" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="autoCommitOnClose" value="true"/>
+        <property name="checkoutTimeout" value="${cpool.checkoutTimeout}"/>
+        <property name="initialPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="minPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="maxPoolSize" value="${cpool.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
+     	<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
+     </bean>
+	
+	<bean id="crmJdbcDb"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSourceCrm" />
+	</bean>
+	
+	<!-- SessionFactory -->
+	<bean id="sessionFactoryCrm" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+        <property name="packagesToScan" value="com.dhc.entity" />
+ 		<property name="dataSource" ref="dataSourceCrm" />
+	</bean>
+	
+	<!-- transactionManager -->
+	<bean id="transactionManagerCrm" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryCrm"/>
+	</bean>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
+    	<property name="persistenceUnitName" value="userFunction"/>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+		<property name="entityManagerFactory" ref="entityManagerFactory" />  
+    </bean> 
+	<!-- datadb end -->
+	
+	<!-- kaptcha config -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">no</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">red</prop>  
+                        <prop key="kaptcha.image.width">200</prop>  
+                        <prop key="kaptcha.textproducer.font.size">90</prop>  
+                        <prop key="kaptcha.image.height">100</prop>  
+                        <prop key="kaptcha.session.key">code</prop>  
+                        <prop key="kaptcha.textproducer.char.length">1</prop>  
+                        <!-- <prop key="kaptcha.textproducer.char.string">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</prop> -->
+                        <prop key="kaptcha.textproducer.char.string">1</prop>
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>  					
+                    </props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- demo start -->
+	<!-- <bean id="dataSourceDemo" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >
+        <property name="driverClass" value="${demo.driver}"/>
+        <property name="jdbcUrl" value="${demo.url}"/>
+        <property name="user" value="${demo.username}"/>
+        <property name="password" value="${demo.password}"/>
+        <property name="autoCommitOnClose" value="true"/>
+        <property name="checkoutTimeout" value="${cpool.checkoutTimeout}"/>
+        <property name="initialPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="minPoolSize" value="${cpool.minPoolSize}"/>
+        <property name="maxPoolSize" value="${cpool.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
+     	<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
+     </bean>
+	
+	<bean id="demoJdbcDb"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSourceDemo" />
+	</bean> -->
+	<!-- demo end -->
+	
+</beans>

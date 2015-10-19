@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd ">
+
+    <!-- base-package一定要写到controller一层, 否则hibernate 会报org.hibernate.HibernateException: No Session found for current thread -->
+    <context:component-scan base-package="com.dhc.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+	<!-- use @ResponseBody -->
+    <mvc:annotation-driven/>
+    
+	<!-- SpringMVC @ResponseBody和@RequestBody with jackson start-->  
+    <bean  
+        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <ref bean="jsonHttpMessageConverter" />  
+            </list>  
+        </property>  
+    </bean>  
+    <bean id="jsonHttpMessageConverter"  
+        class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">  
+        <property name="supportedMediaTypes">  
+            <list>  
+                <value>application/json;charset=UTF-8</value>  
+            </list>  
+        </property>  
+    </bean>  
+    <!-- SpringMVC @ResponseBody和@RequestBody with jackson end-->  
+    
+	<!-- ModelAndView return uri -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"></property>
+          <property name="prefix" value="/jsp/"/>
+          <property name="suffix" value=".jsp"/>
+    </bean>  
+    
+	<!-- 拦截器 -->  
+    <mvc:interceptors>  
+        <mvc:interceptor>
+        	<!-- 拦截所有的Controller -->
+            <mvc:mapping path="/**" />
+            <bean class="com.dhc.interceptor.CommonInterceptor">
+                <property name="mappingURL" value="/Index.do,/Login.do,/user/checkUser.do,/captcha-image.do,/Register.do,/user/registerUser.do,/RegisterPage"/>
+                <property name="defaultURL" value="/Index.do"/>
+            </bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors> 
+    
+    <!-- 
+   		full exception start 
+   		this levle is over ExceptionHandler inside Controller
+   	-->
+	<bean id="exceptionResolver" class="com.dhc.handler.ExceptionHandler"></bean>
+	<!-- full exception end --> 
+</beans>
