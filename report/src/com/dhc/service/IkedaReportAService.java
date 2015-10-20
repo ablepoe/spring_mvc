@@ -19,11 +19,5 @@ public interface IkedaReportAService {
 	 */
 	public List<IkedaReportAReturn> getIkedaReportA(IkedaReportAParam ikedaReportAParam);
 	
-	/**
-	 * 
-	 * @param ikedaReportAParam
-	 * @return
-	 */
-	public List<IkedaReportAReturn> getIkedaReportAExport(IkedaReportAParam ikedaReportAParam);
 	
 }

@@ -23,7 +23,7 @@
 </div>	
 <div id="IkedaReportADiv" style="float:left;margin:auto;width:95%;height:85%" >
     <table class="easyui-datagrid" id="IkedaReportA" title="报表A" style="margin:auto;width:100%;height:100%" 
-    data-options="fitColumns:true,singleSelect:true,rownumbers:false,remoteSort:false,multiSort:false,sortName:'goods_code',sortOrder:'asc'">
+    data-options="fitColumns:true,singleSelect:true,rownumbers:false,remoteSort:true,multiSort:false,sortName:'goods_code',sortOrder:'asc'">
         <thead>
 	    	<tr>
 	    		<th data-options="field:'goods_code',width:'9%',sortable:true">品号</th>
@@ -53,6 +53,13 @@ $(function () {
 	var date = new Date().format("yyyyMMdd");
 	$('#endDate').val(date);
 	$('#exportData').linkbutton('disable');
+	
+	$('#IkedaReportA').datagrid({
+		 onSortColumn: function (sort, order) {
+             getIkedaReportAData($('#startDate').val(),$('#endDate').val());
+         }
+	})
+	
 });
 
 function validate(){
@@ -72,9 +79,13 @@ function validate(){
 
 function getIkedaReportAData(startDate,endDate){
 	showProgress();
+	var sortName = $('#IkedaReportA').datagrid('options').sortName;
+	var sortOrder = $('#IkedaReportA').datagrid('options').sortOrder;
 	var obj = new Object();
 	obj.startDate = startDate;
 	obj.endDate = endDate;
+	obj.sortName = sortName;
+	obj.sortOrder = sortOrder;
 	$('#search').linkbutton('disable');
 	$.ajax({
 		type:"post",
@@ -126,7 +137,6 @@ function defaultHaveScroll(gridid){
 }
 
 function exportData(){
-	console.warn("download");
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var sortName = $('#IkedaReportA').datagrid('options').sortName;
@@ -136,7 +146,6 @@ function exportData(){
 	obj.endDate = endDate;
 	obj.sortName = sortName;
 	obj.sortOrder = sortOrder;
-	console.log(obj);
 	//return;
 	showProgress();
 	$.ajax({
@@ -146,14 +155,10 @@ function exportData(){
 		data:JSON.stringify(obj),
 		dataType:"json",
 		success : function(data){
-			console.log(data);
 			if(data.status == "SUCCESS"){
 				//form submit();
-				console.log(data.data.dlFileName);
-				console.log(data.data.dlSrcFile);
 				$('#dlFileName').val(data.data.dlFileName);
                 $('#dlSrcFile').val(data.data.dlSrcFile);
-                return;
                 $('#downloadFile').submit();
 			}else{
 				showMessageObject(data);

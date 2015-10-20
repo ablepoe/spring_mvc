@@ -163,8 +163,6 @@ function exportData(){
 		success : function(data){
 			if(data.status == "SUCCESS"){
 				//form submit();
-				console.log(data.data.dlFileName);
-				console.log(data.data.dlSrcFile);
 				$('#dlFileName').val(data.data.dlFileName);
                 $('#dlSrcFile').val(data.data.dlSrcFile);
                 $('#downloadFile').submit();
@@ -201,11 +199,8 @@ function exportData2(){
 		data:JSON.stringify(obj),
 		dataType:"json",
 		success : function(data){
-			console.log(data);
 			if(data.status == "SUCCESS"){
 				//form submit();
-				console.log(data.data.dlFileName);
-				console.log(data.data.dlSrcFile);
 				$('#dlFileName').val(data.data.dlFileName);
                 $('#dlSrcFile').val(data.data.dlSrcFile);
                 $('#downloadFile').submit();

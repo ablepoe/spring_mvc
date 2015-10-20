@@ -3,7 +3,6 @@ package com.dhc.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -17,13 +16,12 @@ import com.dhc.entity.IkedaReportAParam;
 import com.dhc.entity.IkedaReportAReturn;
 import com.dhc.entity.ResponseDTO;
 import com.dhc.service.IkedaReportAService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 
  * @author hanliang 20151010
- *
+ * @update hanliang 20151020
+ * -add exportData
  */
 @Controller
 public class IkedaReportAController {
@@ -53,14 +51,6 @@ public class IkedaReportAController {
 	@ResponseBody
 	@RequestMapping(value = "/getIkedaReportAExport")
 	public ResponseDTO getIkedaReportADataExport(@RequestBody IkedaReportAParam ikedaReportAParam){
-		
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			System.out.println(mapper.writeValueAsString(ikedaReportAParam));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		
 		ResponseDTO resp = new ResponseDTO();
 		CommonUtil commonUtil;
 		try{
@@ -72,8 +62,6 @@ public class IkedaReportAController {
 		}finally{
 			commonUtil = null;
 		}
-		
-		resp.setStatus(Common.STATUS_FAILURE);
 		return resp;
 	}
 }

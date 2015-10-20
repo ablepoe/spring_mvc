@@ -23,6 +23,7 @@ import com.dhc.entity.CrmReturn;
 import com.dhc.entity.DemoParam;
 import com.dhc.entity.DemoReturn;
 import com.dhc.entity.IkedaReportAParam;
+import com.dhc.entity.IkedaReportAReturn;
 import com.dhc.entity.ResponseDTO;
 import com.dhc.entity.SampleBuyBackAnalysisByMonthParam;
 import com.dhc.entity.SampleBuyBackAnalysisByMonthReturn;
@@ -246,6 +247,10 @@ public class CommonUtil {
 			clazz = SampleBuyBackAnalysisByMonthReturn.class;
 			return clazz;
 		}
+		if(param instanceof IkedaReportAParam){
+			clazz = IkedaReportAReturn.class;
+			return clazz;
+		}
 		return clazz;
 	}
 	
@@ -286,7 +291,7 @@ public class CommonUtil {
 		if(param instanceof IkedaReportAParam){
 			//get data
 			IkedaReportAService ikedaReportAService = (IkedaReportAService) service;
-			list = ikedaReportAService.getIkedaReportAExport((IkedaReportAParam) param);
+			list = ikedaReportAService.getIkedaReportA((IkedaReportAParam) param);
 		}
 		return list;
 	}

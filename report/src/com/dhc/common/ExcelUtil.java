@@ -173,7 +173,8 @@ public class ExcelUtil {
 				Method getMethod = pd.getReadMethod();
 				Object value = getMethod.invoke(innerObj);
 				//resultArr[j] = value+"";
-				result.add((String) value);
+//				result.add((String) value);
+				result.add(String.valueOf(value) );
 			}
 		}
 		return result;

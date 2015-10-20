@@ -63,9 +63,6 @@ function validate(){
 		showMessageString("终止日期不能为空");
 		return;
 	}
-	console.log(startDate);
-	console.log(endDate);
-	console.log(pathWay);
 	getSampleMemberAgeStatistics(startDate,endDate,pathWay)
 }
 
