@@ -24,15 +24,15 @@
     data-options="fitColumns:true,singleSelect:true,rownumbers:false,remoteSort:true,multiSort:false">
         <thead>
 	    	<tr>
-	    		<th data-options="field:'send_date',width:'9%'">出库日期</th>
-	    		<th data-options="field:'order_no',width:'18%'">订单数</th>
-	    		<th data-options="field:'syslast',width:'10%'">销售数量</th>
-	    		<th data-options="field:'split_amt',width:'14%'">销售金额</th>
-	    		<th data-options="field:'split_dc',width:'10%'">折扣金额</th>
-	    		<th data-options="field:'back_order_no',width:'14%'">退货订单数</th>
-	    		<th data-options="field:'back_syslast',width:'9%'">退货数量</th>
-	    		<th data-options="field:'back_amt',width:'9%'">退货金额</th>
-	    		<th data-options="field:'back_dc_amt',width:'9%'">退货折扣金</th>
+	    		<th data-options="field:'send_date',width:'12%'">出库日期</th>
+	    		<th data-options="field:'order_no',width:'12%'">订单数</th>
+	    		<th data-options="field:'syslast',width:'12%'">销售数量</th>
+	    		<th data-options="field:'split_amt',width:'12%'">销售金额</th>
+	    		<th data-options="field:'split_dc',width:'12%'">折扣金额</th>
+	    		<th data-options="field:'back_order_no',width:'12%'">退货订单数</th>
+	    		<th data-options="field:'back_syslast',width:'10%'">退货数量</th>
+	    		<th data-options="field:'back_amt',width:'10%'">退货金额</th>
+	    		<th data-options="field:'back_dc_amt',width:'10%'">退货折扣金</th>
 	    	</tr>
     	</thead>
     </table>
@@ -59,7 +59,6 @@ function validate(){
 		showMessageString("终止日期不能为空");
 		return;
 	}
-	console.log("validate");
 	//get data
 	getIkedaReportBData(startDate,endDate);
 }
@@ -69,7 +68,6 @@ function getIkedaReportBData(startDate,endDate){
 	var obj = new Object();
 	obj.startDate = startDate;
 	obj.endDate = endDate;
-	console.log(obj);
 	$('#search').linkbutton('disable');
 	$.ajax({
 		type:"post",
@@ -78,7 +76,6 @@ function getIkedaReportBData(startDate,endDate){
 		data:JSON.stringify(obj),
 		dataType:"json",
 		success : function(data){
-			console.log(data.data);
 			if(data.data.length == 0){
 				//show scrollbar even no data
 				defaultHaveScroll("IkedaReportB");
