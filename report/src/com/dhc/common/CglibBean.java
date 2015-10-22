@@ -10,12 +10,12 @@ import net.sf.cglib.beans.BeanMap;
 
 public class CglibBean {
 	/**
-	 * ʵ��Object
+	 * 实体Object
 	 */
 	public Object object = null;
 
 	/**
-	 * ����map
+	 * 属性map
 	 */
 	public BeanMap beanMap = null;
 
@@ -30,31 +30,26 @@ public class CglibBean {
 	}
 
 	/**
-	 * ��bean���Ը�ֵ
+	 * 给bean属性赋值ֵ
 	 * 
-	 * @param property
-	 *            ������
-	 * @param value
-	 *            ֵ
+	 * @param property 属性名
+	 * @param value 值
 	 */
 	public void setValue(String property, Object value) {
 		beanMap.put(property, value);
 	}
 
 	/**
-	 * ͨ��������õ�����ֵ
-	 * 
-	 * @param property
-	 *            ������
-	 * @return ֵ
+	 * 通过属性名得到属性值 
+	 * @param property 属性名
+	 * @return 值
 	 */
 	public Object getValue(String property) {
 		return beanMap.get(property);
 	}
 
 	/**
-	 * �õ���ʵ��bean����
-	 * 
+	 * 得到该实体bean对象
 	 * @return
 	 */
 	public Object getObject() {

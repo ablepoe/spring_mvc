@@ -196,7 +196,6 @@ public class CommonUtil {
 			wb.write(fo);
 			wb.close();
 			fo.close();
-			wb.close();
 			
 			resp.setStatus(Common.STATUS_SUCCESS);
 			Map<String,Object> map = new HashMap<String,Object>();

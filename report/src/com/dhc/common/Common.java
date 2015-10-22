@@ -30,6 +30,6 @@ public class Common {
 	public static String SECONDSHOPPINGANALYZE_TEMPLATE_NAME = "secondShoppingAnalyze_template";
 	//sampleBuyBackAnalysisByMonth template name
 	public static String SAMPLEBUYBACKANALYSISBYMONTH_TEMPLATE_NAME = "sampleBuyBackAnalysisByMonth_template";
-	
+	//ikedaReportA template name
 	public static String IKEDAREPORTA_TEMPLATE_NAME = "IkedaReportA_template";
 }
