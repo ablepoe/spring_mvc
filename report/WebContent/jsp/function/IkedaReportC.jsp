@@ -19,20 +19,27 @@
 	<label style="display:inline-block;width:2%"></label>
 	<a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="validate()">查询</a>
 </div>	
-<div id="IkedaReportCDiv" style="float:left;margin:auto;width:95%;height:85%" >
+<div id="IkedaReportCDiv" style="float:left;margin:auto;width:100%;height:85%" >
     <table class="easyui-datagrid" id="IkedaReportC" title="报表C" style="margin:auto;width:100%;height:100%" 
     data-options="fitColumns:true,singleSelect:true,rownumbers:true,remoteSort:true,multiSort:false">
         <thead>
 	    	<tr>
-	    		<th data-options="field:'order_no',width:'15%'">订单号(前8位是日期)</th>
-	    		<th data-options="field:'goods_code',width:'11%'">商品号</th>
-	    		<th data-options="field:'syslast',width:'8%'">数量</th>
-	    		<th data-options="field:'syslast_amt',width:'8%'">单价</th>
+	    		<th data-options="field:'order_no',width:'12%'">订单号(前8位是日期)</th>
+	    		<th data-options="field:'goods_code',width:'9%'">商品号</th>
+	    		<th data-options="field:'syslast',width:'5%'">数量</th>
+	    		<th data-options="field:'syslast_amt',width:'7%'">单价</th>
 	    		<th data-options="field:'goods_amt',width:'11%'">订单金额(含化妆品)</th>
-	    		<th data-options="field:'dc_amt',width:'11%'">订单折扣金额</th>
-	    		<th data-options="field:'split_dc',width:'13%'">商品折扣金额(分摊)</th>
-	    		<th data-options="field:'split_amt',width:'11%'">商品实际金额</th>
-	    		<th data-options="field:'send_date',width:'11%'">出库日期</th>
+	    		<th data-options="field:'dc_amt',width:'9%'">订单折扣金额</th>
+	    		<th data-options="field:'split_dc',width:'11%'">商品折扣金额(分摊)</th>
+	    		<th data-options="field:'split_amt',width:'9%'">商品实际金额</th>
+	    		<th data-options="field:'send_date',width:'8%'">出库日期</th>
+	    		<th data-options="field:'cust_name',width:'6%'">客户名称</th>
+	    		<th data-options="field:'birthday',width:'7%'">生日</th>
+	    		<th data-options="field:'city_name',width:'6%'">省</th>
+	    		<th data-options="field:'address',width:'40%'">地址</th>
+	    		<th data-options="field:'cust_level_id',width:'8%',formatter:function(value,row,index){return memberLevel(value);}">会员级别</th>
+	    		<th data-options="field:'memb_no',width:'8%'">会员号</th>
+	    		<th data-options="field:'tel',width:'8%'">电话</th>
 	    	</tr>
     	</thead>
     </table>
@@ -118,6 +125,22 @@ function defaultHaveScroll(gridid){
     var data={"total":1,"rows":[text]};  
     $('#'+gridid).datagrid('loadData',data);  
    $("tr[datagrid-row-index='0']").css({"visibility":"hidden"});  
+}
+
+function memberLevel(value){
+	console.log(value);
+	switch(value){
+	case 1000:return '普通会员';
+		break;
+	case 2000:return '高级会员';
+		break;
+	case 3000:return 'vip会员';
+		break;
+	case 4000:return '超级vip会员';
+		break;
+	default:return'未知等级会员';
+	break;
+	}
 }
 
 </script>

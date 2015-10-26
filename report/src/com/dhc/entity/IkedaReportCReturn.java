@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * 
  * @author hanliang 20151021
- *
+ * @update hanliang 20151026
+ * -add extra properties
  */
 public class IkedaReportCReturn implements Serializable{
 
@@ -18,6 +19,13 @@ public class IkedaReportCReturn implements Serializable{
 	private Double split_dc;
 	private Double split_amt;
 	private String send_date;
+	private String cust_name;
+	private int birthday;
+	private String city_name;
+	private String address;
+	private int cust_level_id;
+	private int memb_no;
+	private String tel;
 	
 	public String getOrder_no() {
 		return order_no;
@@ -73,7 +81,49 @@ public class IkedaReportCReturn implements Serializable{
 	public void setSend_date(String send_date) {
 		this.send_date = send_date;
 	}
-	
+	public String getCust_name() {
+		return cust_name;
+	}
+	public void setCust_name(String cust_name) {
+		this.cust_name = cust_name;
+	}
+	public int getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(int birthday) {
+		this.birthday = birthday;
+	}
+	public String getCity_name() {
+		return city_name;
+	}
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public int getCust_level_id() {
+		return cust_level_id;
+	}
+	public void setCust_level_id(int cust_level_id) {
+		this.cust_level_id = cust_level_id;
+	}
+	public int getMemb_no() {
+		return memb_no;
+	}
+	public void setMemb_no(int memb_no) {
+		this.memb_no = memb_no;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
 	/**
 	 * 
 	 */
