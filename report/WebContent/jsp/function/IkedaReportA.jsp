@@ -49,7 +49,6 @@
 <script type="text/javascript">
 
 $(function () {
-	$('#startDate').val("20150815");
 	var date = new Date().format("yyyyMMdd");
 	$('#endDate').val(date);
 	$('#exportData').linkbutton('disable');

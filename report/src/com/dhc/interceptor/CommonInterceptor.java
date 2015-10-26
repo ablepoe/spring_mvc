@@ -37,7 +37,7 @@ public class CommonInterceptor implements HandlerInterceptor {
             HttpServletResponse response, Object handler) throws Exception{  
     		//muti TAB
 	    	if(request.getSession().isNew()) {
-	    		response.sendRedirect("http://localhost:8080/report/Index.do");
+	    		response.sendRedirect("http://192.168.10.151:80/report/Index.do");
 //	    		response.sendRedirect(request.getContextPath() + defaultURL);
 	    		return false;
 	    	}
@@ -57,7 +57,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 //	    		return false;
 	        	User loginInfo = CommonUtil.getLoginInfo(request.getSession());
 		        if(loginInfo == null) {
-		        	response.sendRedirect("http://localhost:8080/report/Index.do");
+		        	response.sendRedirect("http://192.168.10.151:80/report/Index.do");
 //		    		response.sendRedirect(request.getContextPath() + defaultURL);
 		            return false;
 		        }

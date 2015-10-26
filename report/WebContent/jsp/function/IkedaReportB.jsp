@@ -43,7 +43,6 @@
 <script type="text/javascript">
 
 $(function () {
-	$('#startDate').val("20150930");
 	var date = new Date().format("yyyyMMdd");
 	$('#endDate').val(date);
 });

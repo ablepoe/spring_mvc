@@ -792,14 +792,14 @@ function Map() {
 function urlCheck(){
 	$.ajax({
 		type:"post",
-		url:"http://localhost:8080/report/pageInit.do",
+		url:"http://192.168.10.151:80/report/pageInit.do",
 		data:"{}",
 		dataType:"json",
 		success : function(data){
 
 		},
 		error : function(){
-			window.location.href="http://localhost:8080/report/Index.do";
+			window.location.href="http://192.168.10.151:80/report/Index.do";
 		}
 		
 	})
