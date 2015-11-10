@@ -11,7 +11,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.demo1.service.TransferService;
 
-
+/**
+ * 测试类 使用方案1 xml配置方式
+ * @author hanliang
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class TransferServiceTest {
