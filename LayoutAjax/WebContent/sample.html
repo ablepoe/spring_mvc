@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/layer.js"></script>
+</head>
+<body>
+<div id="div1">
+sample.html
+<a href="/LayoutAjax/index.html">index.html</a>
+<input type="button" value="ajaxChange" onclick="ajaxChange('sample')"/>
+</div>
+
+<div id="div2">
+template
+<a href="/index.html">index.html</a>
+<input type="button" value="ajaxChange" onclick="ajaxChange('template')"/>
+</div>
+
+
+</body>
+<script type="text/javascript">
+$(function () {
+	$("#div1").show();
+	$("#div2").hide();
+})
+
+
+function ajaxChange(target){
+	var targetPage;
+	if("sample" == target){
+		console.log("sample → template");
+		targetPage = "template";
+	}else{
+		targetPage = "sample";
+	}
+	
+	console.log(targetPage);
+
+	$.ajax({
+		type:"post",
+		//if you want error situation try /LayoutAjax/templateError.html
+		url:"/LayoutAjax/"+targetPage+".html",
+		data:"",
+		dataType:"",
+		success : function(data){
+			console.log("suc");
+			if("sample" == target){
+				$("#div1").hide();
+				$("#div2").show();
+			}else{
+				$("#div1").show();
+				$("#div2").hide();
+			}
+			
+		},
+		error : function(data){
+			console.log("err");
+		}
+	});
+}
+	
+</script>
+</html>
