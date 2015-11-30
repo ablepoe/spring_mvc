@@ -40,6 +40,8 @@
 	    		<th data-options="field:'cust_level_id',width:'8%',formatter:function(value,row,index){return memberLevel(value);}">会员级别</th>
 	    		<th data-options="field:'memb_no',width:'8%'">会员号</th>
 	    		<th data-options="field:'tel',width:'8%'">电话</th>
+	    		<th data-options="field:'back_amt',width:'8%'">退货数量</th>
+	    		<th data-options="field:'back_dc_amt',width:'8%'">退货金额 </th>
 	    	</tr>
     	</thead>
     </table>
@@ -50,6 +52,7 @@
 <script type="text/javascript">
 
 $(function () {
+	$('#startDate').val("20150930");
 	var date = new Date().format("yyyyMMdd");
 	$('#endDate').val(date);
 });

@@ -26,6 +26,8 @@ public class IkedaReportCReturn implements Serializable{
 	private int cust_level_id;
 	private int memb_no;
 	private String tel;
+	private String back_amt;
+	private String back_dc_amt;
 	
 	public String getOrder_no() {
 		return order_no;
@@ -123,9 +125,22 @@ public class IkedaReportCReturn implements Serializable{
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
+	public String getBack_amt() {
+		return back_amt;
+	}
+	public void setBack_amt(String back_amt) {
+		this.back_amt = back_amt;
+	}
+	public String getBack_dc_amt() {
+		return back_dc_amt;
+	}
+	public void setBack_dc_amt(String back_dc_amt) {
+		this.back_dc_amt = back_dc_amt;
+	}
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7642693033854985921L;
+
 }

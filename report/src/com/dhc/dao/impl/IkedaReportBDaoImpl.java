@@ -23,7 +23,8 @@ import com.dhc.entity.IkedaReportBReturn;
 /**
  * 
  * @author hanliang 20151020
- *
+ * @update hanliang 20151130
+ * -replace sql with new
  */
 @Repository("IkedaReportBDao")
 public class IkedaReportBDaoImpl extends BaseDaoImpl implements IkedaReportBDao {
@@ -34,8 +35,8 @@ public class IkedaReportBDaoImpl extends BaseDaoImpl implements IkedaReportBDao 
 		StringBuffer sb = new StringBuffer();
 		sb.append(" Select A.send_date,Count(Distinct A.order_no),Sum(A.syslast),Sum(A.split_amt),Sum(A.split_dc),");
 		sb.append(" Count(Distinct B.order_no),Nvl(Sum(B.syslast),0),");
-		sb.append(" Sum(Case When B.order_no Is Not Null Then A.split_amt Else 0 End),");
-		sb.append(" Sum(Case When B.order_no Is Not Null Then A.split_dc Else 0 End)");
+		sb.append(" Sum(Case When B.order_no Is Not Null Then B.syslast*(A.SPLIT_AMT/NVL(B.SYSLAST,1)) Else 0 End),");
+		sb.append(" Sum(Case When B.order_no Is Not Null Then B.syslast*(A.split_dc/NVL(B.SYSLAST,1)) Else 0 End)");
 		sb.append(" From torderdt_split A,tclaimdt B"); 
 		sb.append(" Where A.order_no = B.order_no(+) And A.goods_code = B.goods_code(+) And length(A.goods_code) = 9");
 		sb.append(" And A.send_date >= :startDate And A.send_date <= to_char(Sysdate,'yyyymmdd')");
