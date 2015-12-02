@@ -23,6 +23,8 @@ import com.dhc.entity.IkedaReportCReturn;
  * @update hanliang 20151130
  * -replace sql with new 
  * -add back_amt & back_dc_amt
+ * @update hanliang 20151202
+ * -replace sql with new
  */
  @Repository("IkedaReportCDao")
 public class IkedaReportCDaoImpl extends BaseDaoImpl implements IkedaReportCDao{
@@ -37,8 +39,8 @@ public class IkedaReportCDaoImpl extends BaseDaoImpl implements IkedaReportCDao{
 		sb.append(" Where A.order_no = B.order_no And B.cust_no = C.cust_no And B.cust_no = D.cust_no And B.cust_no = F.cust_no(+)");
 		sb.append(" And A.order_no = G.order_no(+) And A.goods_code = G.goods_code(+)");
 		sb.append(" And D.default_yn = '1'");
-		sb.append(" And Case When D.receiver_post = '999999' Then substr(D.Receiver_Addr,1,6) Else D.Receiver_Post End = E.post_no");
-		sb.append(" And Case When D.receiver_post = '999999' Then '001' Else D.Receiver_Post_seq End = E.post_seq"); 
+		sb.append(" And Case When D.receiver_post = '999999' Then substr(D.Receiver_Addr,1,6) Else D.Receiver_Post End = E.post_no(+)");
+		sb.append(" And Case When D.receiver_post = '999999' Then '001' Else D.Receiver_Post_seq End = E.post_seq(+)"); 
 		sb.append(" And length(A.goods_code) = 9 And A.send_date >= :startDate And A.send_date <= to_char(Sysdate,'yyyymmdd')"); 
 		sb.append(" Order By A.send_date,A.order_no,A.goods_code");
 		Map<String,String> paramMap = new HashMap<String,String>();
