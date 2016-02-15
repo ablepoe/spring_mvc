@@ -25,6 +25,8 @@ import com.dhc.entity.IkedaReportBReturn;
  * @author hanliang 20151020
  * @update hanliang 20151130
  * -replace sql with new
+ * @update hanliang 20160215
+ * -sql divide 0 bug fix
  */
 @Repository("IkedaReportBDao")
 public class IkedaReportBDaoImpl extends BaseDaoImpl implements IkedaReportBDao {
@@ -35,8 +37,8 @@ public class IkedaReportBDaoImpl extends BaseDaoImpl implements IkedaReportBDao 
 		StringBuffer sb = new StringBuffer();
 		sb.append(" Select A.send_date,Count(Distinct A.order_no),Sum(A.syslast),Sum(A.split_amt),Sum(A.split_dc),");
 		sb.append(" Count(Distinct B.order_no),Nvl(Sum(B.syslast),0),");
-		sb.append(" Sum(Case When B.order_no Is Not Null Then B.syslast*(A.SPLIT_AMT/NVL(B.SYSLAST,1)) Else 0 End),");
-		sb.append(" Sum(Case When B.order_no Is Not Null Then B.syslast*(A.split_dc/NVL(B.SYSLAST,1)) Else 0 End)");
+		sb.append(" SUM (Case When NVL (B.SYSLAST, 1) = 0 Then 0 Else CASE WHEN B.order_no IS NOT NULL THEN B.syslast * ( A .SPLIT_AMT / NVL (B.SYSLAST, 1) ) ELSE 0 End End),");
+		sb.append(" SUM (Case When NVL (B.SYSLAST, 1) = 0 Then 0 Else CASE WHEN B.order_no IS NOT NULL THEN B.syslast * ( A .split_dc / NVL (B.SYSLAST, 1) ) ELSE 0 End End )");
 		sb.append(" From torderdt_split A,tclaimdt B"); 
 		sb.append(" Where A.order_no = B.order_no(+) And A.goods_code = B.goods_code(+) And length(A.goods_code) = 9");
 		sb.append(" And A.send_date >= :startDate And A.send_date <= to_char(Sysdate,'yyyymmdd')");
