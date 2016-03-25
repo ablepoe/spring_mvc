@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context ="http://www.springframework.org/schema/context" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/data/repository
+ 		http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd
+        " >
+	
+	<!-- 开启注解 -->
+	<context:annotation-config/>
+	
+	<!-- 扫描路径 -->
+	<context:component-scan base-package="com.*"></context:component-scan>
+	
+	<!-- 配置事务管理类 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 开启事务注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 数据库连接池 -->  
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">  
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8" />  
+        <property name="username" value="root" />  
+        <property name="password" value="" />  
+    </bean>  
+    <!-- 配置mybatis固定的写法 -->  
+    <!-- 配置sqlSessionFactory，并指定Configuration.xml -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource"/>  
+        <!-- 在服务器端部署 -->
+        <property name="configLocation" value="/WEB-INF/classes/com/config/Configuration.xml"/>
+        <!-- 本地junit测试 -->
+        <!-- <property name="configLocation" value="com/config/Configuration.xml"/> -->
+    </bean>  
+    <!-- 生成sqlSession -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">  
+        <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>  
+    </bean>
+    
+    <!-- 注解方式配置事务管理以及aop切面 
+    	1、开启aop注解
+    	2、在自定义的aop切面类上加上注解@Aspect
+    	3、在service层对应方法上使用@Transactional注解，并配置其propagation
+    	<aop:aspectj-autoproxy/>
+    -->
+    
+    
+    <!-- 配置文件方式配置事务管理以及aop切面 -->
+    <!-- 配置事务管理以及aop切面调用 -->
+    <tx:advice id="queryAdvice" transaction-manager="transactionManager">
+    	<tx:attributes>
+    		<tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+    		<tx:method name="insert*" propagation="REQUIRED" read-only="false" />
+    	</tx:attributes>
+    </tx:advice>
+	<!-- 自定义切面需要调用的方法 -->
+	<bean id="queryAopBean" class="com.aop.QueryAopBean"></bean>
+    <!-- 配置切面 -->
+	<aop:config>
+	   <!-- 切入点 -->
+	   <aop:pointcut expression="execution(* com.service.*.*(..))" id="queryPointCut"/>
+	   <!-- pointcut以及advice的配置器 -->
+	   <aop:advisor advice-ref="queryAdvice" pointcut-ref="queryPointCut"/>
+	   <!-- 自定义方法调用 -->
+	   <!-- <aop:aspect ref="queryAopBean">
+	   	<aop:before method="beforeDo" pointcut-ref="queryPointCut"/>
+	   </aop:aspect> -->
+	</aop:config>
+    
+    
+    <!-- SpringMVC @ResponseBody和@RequestBody with jackson start-->  
+    <bean  
+        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <ref bean="jsonHttpMessageConverter" />  
+            </list>  
+        </property>  
+    </bean>  
+    <bean id="jsonHttpMessageConverter"  
+        class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+        <property name="supportedMediaTypes">  
+            <list>  
+                <value>application/json;charset=UTF-8</value>  
+            </list>  
+        </property>  
+    </bean>  
+    <!-- SpringMVC @ResponseBody和@RequestBody with jackson end--> 
+    
+</beans>
