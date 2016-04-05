@@ -11,6 +11,8 @@ import com.dao.QueryDao;
 import com.entity.Command;
 import com.entity.CommandContent;
 import com.entity.Message;
+import com.entity.Pagination;
+import com.entity.SearchParam;
 
 /**
  * 
@@ -48,4 +50,45 @@ public class QueryDaoImpl implements QueryDao {
 		return queryDao.getSpecialMessages(command);
 	}
 
+	@Override
+	public int insertCommands(List<Command> commands) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.insertCommands(commands);
+	}
+
+	@Override
+	public int removeOneCommand(int id) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.removeOneCommand(id);
+	}
+
+	@Override
+	public int removeSelected(List<String> ids) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.removeSelected(ids);
+	}
+
+	@Override
+	public int updateOneCommand(Command command) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.updateOneCommand(command);
+	}
+
+	@Override
+	public List<Message> getLimitCommands(Pagination pagination) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.getLimitCommands(pagination);
+	}
+
+	@Override
+	public int getSpecialMessageCounts(Command command) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.getSpecialMessageCounts(command);
+	}
+
+	@Override
+	public List<Message> getSpecialMessagesByPage(SearchParam searchParam) {
+		QueryDao queryDao = sqlSession.getMapper(QueryDao.class);
+		return queryDao.getSpecialMessagesByPage(searchParam);
+	}
 }

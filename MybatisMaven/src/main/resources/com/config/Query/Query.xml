@@ -49,60 +49,62 @@
 				COMMAND = #{command}
 			</if>
 			<if test="description != null and !&quot;&quot;.equals(description.trim())">
-				DESCRIPTION like '%' #{description} '%'
+				AND DESCRIPTION like '%' #{description} '%'
 			</if>
 		</where>
-		ORDER BY ID
+		ORDER BY ID 
 	</select>
-<!--   <resultMap type="UserAlias" id="UserResult">
-    <id column="id" jdbcType="INTEGER" property="id"/>
-    <result column="username" jdbcType="VARCHAR" property="username"/>
-    <result column="password" jdbcType="VARCHAR" property="password.encrypted"/>
-    <result column="administrator" jdbcType="BOOLEAN" property="administrator"/>
-  </resultMap> -->
-
-  <!-- <select id="find" parameterType="long" resultMap="UserResult">
-    SELECT * FROM user WHERE id = #{id:INTEGER}
-  </select>
-
-  <select id="version" parameterType="long" resultType="int">
-    SELECT version FROM user WHERE id = #{id,jdbcType=INTEGER}
-  </select>
-
-  <delete id="delete" parameterType="UserAlias">
-    DELETE FROM user WHERE id = #{id:INTEGER}
-  </delete>
-
-  <insert id="insert" parameterType="UserAlias" useGeneratedKeys="false">
-    INSERT INTO user
-    ( id,
-    username,
-    password,
-    administrator
-    )
-    VALUES
-    ( #{id},
-    #{username,jdbcType=VARCHAR},
-    #{password.encrypted:VARCHAR},
-    #{administrator,jdbcType=BOOLEAN}
-    )
-  </insert>
-
-  <update id="update" parameterType="UserAlias">
-    UPDATE user SET
-    username = #{username,jdbcType=VARCHAR},
-    password = #{password.encrypted,jdbcType=VARCHAR},
-    administrator = #{administrator,jdbcType=BOOLEAN}
-    WHERE
-    id = #{id,jdbcType=INTEGER}
-  </update>
-
-    Unique constraint check
-  <select id="isUniqueUsername" parameterType="map" resultType="boolean">
-    SELECT (count(*) = 0)
-    FROM user
-    WHERE ((#{userId,jdbcType=BIGINT} IS NOT NULL AND id != #{userId,jdbcType=BIGINT}) OR #{userId,jdbcType=BIGINT} IS
-    NULL)  other than me
-    AND (username = #{username,jdbcType=VARCHAR})
-  </select> -->
+	
+	<select id="getSpecialMessageCounts" resultType="int" parameterType="com.entity.Command">
+		select count(1) from COMMAND
+		<where>
+			<if test="command != null and !&quot;&quot;.equals(command.trim())">
+				COMMAND = #{command}
+			</if>
+			<if test="description != null and !&quot;&quot;.equals(description.trim())">
+				AND DESCRIPTION like '%' #{description} '%'
+			</if>
+		</where>
+		ORDER BY ID 
+	</select>
+	
+	<insert id="insertCommands" parameterType="List">
+		insert into COMMAND(COMMAND,DESCRIPTION) values
+		<foreach collection="list" separator="," item="item">
+			(#{item.command},#{item.description})
+		</foreach>
+	</insert>
+	
+	<delete id="removeOneCommand" parameterType="int">
+		delete from COMMAND where ID = #{_parameter}
+	</delete>
+	
+	<delete id="removeSelected" parameterType="List">
+		delete from COMMAND where ID in ( 
+		<foreach collection="list" item="item" separator=",">
+			#{item}
+		</foreach>
+		)
+	</delete>
+	
+	<update id="updateOneCommand" parameterType="com.entity.Command">
+		update Command set COMMAND=#{command},DESCRIPTION=#{description} where ID=#{id}
+	</update>
+	
+	<select id="getLimitCommands" parameterType="com.entity.Pagination" resultMap="Message">
+		select ID,COMMAND,DESCRIPTION from COMMAND order by ID limit #{baseSearch},#{basePagi}
+	</select>
+	
+	<select id="getSpecialMessagesByPage" resultMap="Message" parameterType="com.entity.SearchParam">
+		select ID,COMMAND,DESCRIPTION from COMMAND
+		<where>
+			<if test="command != null and !&quot;&quot;.equals(command.command.trim())">
+				COMMAND = #{command.command}
+			</if>
+			<if test="command != null and !&quot;&quot;.equals(command.description.trim())">
+				AND DESCRIPTION like '%' #{command.description} '%'
+			</if>
+		</where>
+		ORDER BY ID 
+	</select>
 </mapper>

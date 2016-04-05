@@ -45,6 +45,10 @@
     </environment>
   </environments> -->
 
+  <plugins>
+  	<plugin interceptor="com.intercepter.mybatis.MybatisIntercepter"></plugin>
+  </plugins>
+
   <mappers>
     <!-- <mapper resource="org/apache/ibatis/submitted/complex_property/User.xml"/> -->
     <mapper resource="com/config/Query/Query.xml"/>

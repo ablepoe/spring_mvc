@@ -38,7 +38,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<!-- 配置拦截路径 -->
-			<mvc:mapping path="/**" />
+			<mvc:mapping path="/ajaxJump" />
 			<!-- 配置放行路径 -->
 			<mvc:exclude-mapping path="/images/**"/>
 			<mvc:exclude-mapping path="/css/**"/>
