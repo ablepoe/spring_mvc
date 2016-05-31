@@ -1,9 +1,6 @@
 package com.dao;
 
-import static org.junit.Assert.fail;
-
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
