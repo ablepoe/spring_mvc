@@ -15,9 +15,9 @@
 		<!-- 数据库驱动 -->
 		<property name="driverClass" value="${driver}"/>
 		<!-- 数据库连接地址 -->
-		<property name="url" value="${url}"/>
+		<property name="jdbcUrl" value="${url}"/>
 		<!-- 用户名 -->
-		<property name="user" value="${username}"/>
+		<property name="user" value="${user}"/>
 		<!-- 密码 -->
 		<property name="password" value="${password}"/>
 		
