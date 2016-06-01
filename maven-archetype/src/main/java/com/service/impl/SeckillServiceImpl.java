@@ -114,13 +114,10 @@ public class SeckillServiceImpl implements SeckillService{
 				}
 			}
 		} catch (SeckillCloseException e1){
-			logger.error(e1.getMessage(), e1);
 			throw e1;
 		} catch (RepeatKillException e2){
-			logger.error(e2.getMessage(), e2);
 			throw e2;
 		} catch (Exception e){
-			logger.error(e.getMessage(), e);
 			throw new SeckillException("seckill inner error:"+e.getMessage());
 		}
 	}
