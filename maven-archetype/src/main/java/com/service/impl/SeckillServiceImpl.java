@@ -1,10 +1,13 @@
 package com.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -94,6 +97,9 @@ public class SeckillServiceImpl implements SeckillService{
 	public SeckillExecution executeSeckill(long seckill_id, long user_phone,
 			String md5) throws SeckillException, RepeatKillException,
 			SeckillCloseException {
+		if(md5 == null || !md5.equals(getMd5(seckill_id))){
+			return new SeckillExecution(seckill_id, SeckillStateEnum.DATA_REWRITE);
+		}
 		try{
 			//秒杀逻辑
 			//先减少数量
@@ -131,5 +137,33 @@ public class SeckillServiceImpl implements SeckillService{
 		String source = seckill_id + SALT;
 		String md5 = DigestUtils.md5DigestAsHex(source.getBytes());
 		return md5;
+	}
+
+	@Override
+	public SeckillExecution executeSeckillProcedure(long seckill_id,
+			long user_phone, String md5) throws SeckillException,
+			RepeatKillException, SeckillCloseException {
+		if(md5 == null || !md5.equals(getMd5(seckill_id))){
+			return new SeckillExecution(seckill_id, SeckillStateEnum.DATA_REWRITE);
+		}
+		Date killTime = new Date();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("seckillId", seckill_id);
+		map.put("phone", user_phone);
+		map.put("killTime", killTime);
+		map.put("result", null);
+		try{
+			seckillDao.killByProcedure(map);
+			int result = MapUtils.getInteger(map, "result",-2);
+			if(result == 1){
+				SuccessKilled sk = successKilledDao.queryByIdWithSeckill(seckill_id, user_phone);
+				return new SeckillExecution(seckill_id, SeckillStateEnum.SUCCESS,sk);
+			}else{
+				return new SeckillExecution(seckill_id, SeckillStateEnum.stateOf(result));
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+			return new SeckillExecution(seckill_id, SeckillStateEnum.INNER_ERROR);
+		}
 	}
 }
